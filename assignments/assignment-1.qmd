@@ -13,3 +13,42 @@ My first assignment has two parts.
 ## (a)
 
 ## (b)
+
+```{r}
+# Load the required package and dataset
+library(dslabs)
+data("polls_us_election_2016")
+
+# Display the initial 10 rows
+initial_rows <- polls_us_election_2016[1:10, ]
+print(initial_rows)
+
+# Count and print the total number of missing (NA) values
+initial_na_count <- sum(is.na(polls_us_election_2016))
+cat("Initial NA count:", initial_na_count, "\n")
+
+# Define replacement values
+replacement_year <- 2000
+replacement_name <- "Irem"
+
+# Create a copy of the dataset to modify
+updated_data <- polls_us_election_2016
+
+# Replace NA values based on column type
+updated_data[] <- lapply(updated_data, function(column) {
+  if (is.numeric(column)) {
+    column[is.na(column)] <- replacement_year
+  } else if (is.character(column)) {
+    column[is.na(column)] <- replacement_name
+  }
+  return(column)
+})
+
+# Display the first 10 rows of the updated dataset
+updated_rows <- updated_data[1:10, ]
+print(updated_rows)
+
+# Count and print the number of NA values remaining
+remaining_na_count <- sum(is.na(updated_data))
+cat("Remaining NA count:", remaining_na_count,"\n")
+```
